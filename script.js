@@ -2,31 +2,39 @@
 let numRows = 0;
 let numCols = 0;
 let colorSelected; 
+let selectedCellRow, selectedCellColumn;
 
 function getGrid() {
     return document.getElementById("grid");
 }
-
+function createCell(row, col) {
+    let cell = document.createElement('td');
+    cell.setAttribute("data-row", row);
+    cell.setAttribute("data-col", col);
+    cell.onclick = () => {
+        selectedCellRow = row;
+        selectedCellColumn = col;
+    };
+    return cell;
+}
 // Add a row
 function addRow() {
-    numRows += 1;
-    let grid = getGrid();
     let row = document.createElement('tr')
     for (let i = 0; i < numCols; i++) {
-        row.appendChild(document.createElement('td'));
+        row.appendChild(createCell(numRows, i));
     }
-    grid.appendChild(row);
-    console.log(123);
+    getGrid().appendChild(row);
+    numRows += 1;
 }
 
 // Add a column
 function addColumn() {
-    numCols += 1;
     let rows = getGrid().children;
     for (let i = 0; i < numRows; i++) {
-        console.log(rows[i]);
-        console.log(i);
+        rows[i].appendChild(createCell(i, numCols));
     }
+    numCols += 1;
+
 }
 
 // Remove a row
