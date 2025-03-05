@@ -2,25 +2,31 @@
 let numRows = 0;
 let numCols = 0;
 let colorSelected; 
-/* 
-<tr>
-    <td onclick="alert('Clicked a table cell');"></td>
-    <td onclick="alert('Clicked a table cell');"></td>
-    <td onclick="alert('Clicked a table cell');"></td>
-</tr> 
-*/
+
 function getGrid() {
     return document.getElementById("grid");
 }
 
 // Add a row
 function addRow() {
-    console.log(getGrid());
+    numRows += 1;
+    let grid = getGrid();
+    let row = document.createElement('tr')
+    for (let i = 0; i < numCols; i++) {
+        row.appendChild(document.createElement('td'));
+    }
+    grid.appendChild(row);
+    console.log(123);
 }
 
 // Add a column
 function addColumn() {
-    alert("Clicked Add Col"); // Replace this line with your code.
+    numCols += 1;
+    let rows = getGrid().children;
+    for (let i = 0; i < numRows; i++) {
+        console.log(rows[i]);
+        console.log(i);
+    }
 }
 
 // Remove a row
