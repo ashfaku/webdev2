@@ -9,8 +9,6 @@ function getGrid() {
 }
 function createCell(row, col) {
     let cell = document.createElement('td');
-    cell.setAttribute("data-row", row);
-    cell.setAttribute("data-col", col);
     cell.onclick = () => {
         selectedCellRow = row;
         selectedCellColumn = col;
@@ -39,7 +37,8 @@ function addColumn() {
 
 // Remove a row
 function removeRow() {
-    alert("Clicked Remove Row"); // Replace this line with your code.
+    if (getGrid().childElementCount > 0)
+        getGrid().lastChild.remove();
 }
 
 // Remove a column
@@ -52,18 +51,34 @@ function selectColor(){
     colorSelected = document.getElementById("selectedColorId").value;
     console.log(colorSelected);
 }
-
+function applyFunctionToAllCells(func) {
+    let rows = [...getGrid().children];
+    rows.forEach(row => {
+        let columns = [...row.children];
+        columns.forEach(cell => func(cell));
+    });
+}
 // Fill all uncolored cells
 function fillUncoloredCells(){
-    alert("Clicked Fill All Uncolored"); // Replace this line with your code.
+    applyFunctionToAllCells((cell) => {
+        console.log(cell.style.backgroundColor);
+        cell.style.backgroundColor = (cell.style.backgroundColor == "" || cell.style.backgroundColor == "white") 
+        ? colorSelected
+        : cell.style.backgroundColor;
+    });
 }
-
 // Fill all cells
 function fillAllCells(){
-    alert("Clicked Fill All"); // Replace this line with your code.
+    applyFunctionToAllCells((cell) => {
+        console.log(cell.style.backgroundColor);
+        cell.style.backgroundColor = colorSelected;
+    });
 }
 
 // Clear all cells
 function clearAllCells(){
-    alert("Clicked Clear All"); // Replace this line with your code.
+    applyFunctionToAllCells((cell) => {
+        console.log(cell.style.backgroundColor);
+        cell.style.backgroundColor = "white";
+    });
 }
