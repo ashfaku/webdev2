@@ -13,6 +13,7 @@ function createCell(row, col) {
     cell.onclick = () => {
         selectedCellRow = row;
         selectedCellColumn = col;
+        cell.style.backgroundColor = colorSelected;
     };
     return cell;
 }
