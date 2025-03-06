@@ -1,7 +1,7 @@
 // Declare global variables
 let numRows = 0;
 let numCols = 0;
-let colorSelected; 
+let colorSelected = "white"; 
 let selectedCellRow, selectedCellColumn;
 
 function getGrid() {
@@ -9,6 +9,7 @@ function getGrid() {
 }
 function createCell(row, col) {
     let cell = document.createElement('td');
+    cell.style.backgroundColor = colorSelected;
     cell.onclick = () => {
         selectedCellRow = row;
         selectedCellColumn = col;
@@ -43,7 +44,8 @@ function removeRow() {
 
 // Remove a column
 function removeColumn() {
-    alert("Clicked Remove Col"); // Replace this line with your code.
+    let rows = Array.from(getGrid().children);;
+    rows.forEach(row => row.lastChild.remove());
 }
 
 // Set global variable for selected color
