@@ -1,7 +1,7 @@
 // Declare global variables
 let numRows = 0;
 let numCols = 0;
-let colorSelected; 
+let colorSelected = "white"; 
 let selectedCellRow, selectedCellColumn;
 
 function getGrid() {
@@ -9,11 +9,11 @@ function getGrid() {
 }
 function createCell(row, col) {
     let cell = document.createElement('td');
-    cell.setAttribute("data-row", row);
-    cell.setAttribute("data-col", col);
+    cell.style.backgroundColor = colorSelected;
     cell.onclick = () => {
         selectedCellRow = row;
         selectedCellColumn = col;
+        cell.style.backgroundColor = colorSelected;
     };
     return cell;
 }
@@ -39,12 +39,18 @@ function addColumn() {
 
 // Remove a row
 function removeRow() {
-    alert("Clicked Remove Row"); // Replace this line with your code.
+    if (getGrid().childElementCount > 0) {
+        getGrid().lastChild.remove();
+        numRows -= 1;
+    }
 }
 
 // Remove a column
 function removeColumn() {
-    alert("Clicked Remove Col"); // Replace this line with your code.
+    let rows = Array.from(getGrid().children);
+    rows.forEach(row => row.lastChild.remove());
+    if (numCols > 0)
+        numCols -= 1;
 }
 
 // Set global variable for selected color
@@ -52,18 +58,32 @@ function selectColor(){
     colorSelected = document.getElementById("selectedColorId").value;
     console.log(colorSelected);
 }
-
+function applyFunctionToAllCells(func) {
+    let rows = [...getGrid().children];
+    rows.forEach(row => {
+        let columns = [...row.children];
+        columns.forEach(cell => func(cell));
+    });
+}
 // Fill all uncolored cells
 function fillUncoloredCells(){
-    alert("Clicked Fill All Uncolored"); // Replace this line with your code.
+    applyFunctionToAllCells((cell) => {
+        cell.style.backgroundColor = (cell.style.backgroundColor == "" || cell.style.backgroundColor == "white") 
+        ? colorSelected
+        : cell.style.backgroundColor;
+    });
 }
-
 // Fill all cells
 function fillAllCells(){
-    alert("Clicked Fill All"); // Replace this line with your code.
+    applyFunctionToAllCells((cell) => {
+        console.log(cell.style.backgroundColor);
+        cell.style.backgroundColor = colorSelected;
+    });
 }
 
 // Clear all cells
 function clearAllCells(){
-    alert("Clicked Clear All"); // Replace this line with your code.
+    applyFunctionToAllCells((cell) => {
+        cell.style.backgroundColor = "white";
+    });
 }
