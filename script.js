@@ -39,14 +39,18 @@ function addColumn() {
 
 // Remove a row
 function removeRow() {
-    if (getGrid().childElementCount > 0)
+    if (getGrid().childElementCount > 0) {
         getGrid().lastChild.remove();
+        numRows -= 1;
+    }
 }
 
 // Remove a column
 function removeColumn() {
-    let rows = Array.from(getGrid().children);;
+    let rows = Array.from(getGrid().children);
     rows.forEach(row => row.lastChild.remove());
+    if (numCols > 0)
+        numCols -= 1;
 }
 
 // Set global variable for selected color
@@ -64,7 +68,6 @@ function applyFunctionToAllCells(func) {
 // Fill all uncolored cells
 function fillUncoloredCells(){
     applyFunctionToAllCells((cell) => {
-        console.log(cell.style.backgroundColor);
         cell.style.backgroundColor = (cell.style.backgroundColor == "" || cell.style.backgroundColor == "white") 
         ? colorSelected
         : cell.style.backgroundColor;
@@ -81,7 +84,6 @@ function fillAllCells(){
 // Clear all cells
 function clearAllCells(){
     applyFunctionToAllCells((cell) => {
-        console.log(cell.style.backgroundColor);
         cell.style.backgroundColor = "white";
     });
 }
